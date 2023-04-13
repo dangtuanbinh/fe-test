@@ -150,11 +150,11 @@ const HomePage = () => {
               value={country}
               onChange={onCountryInputChange}
               type="text"
-              placeholder="Enter your country..."
+              placeholder="Enter your country code..."
             />
             {country === "" && showErrors ? (
               <div className={`${classNamePrefix}__error`}>
-                Please enter your city
+                Please enter your country code
               </div>
             ) : (
               ""
