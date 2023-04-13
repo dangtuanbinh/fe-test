@@ -1,12 +1,13 @@
-import UnorderedListOutlined from "@ant-design/icons/lib/icons/UnorderedListOutlined";
-import "./styles.scss";
+import moment from "moment";
 import BarChartOutlined from "@ant-design/icons/lib/icons/BarChartOutlined";
 import DashboardOutlined from "@ant-design/icons/lib/icons/DashboardOutlined";
 import FileImageOutlined from "@ant-design/icons/lib/icons/FileImageOutlined";
 import ExperimentOutlined from "@ant-design/icons/lib/icons/ExperimentOutlined";
+
 import { formatFahrenheitToCelcius, getFullDateTime } from "../../utils/commonFunctions";
 import { DATE_FORMAT } from "../../utils/constants";
-import moment from "moment";
+import "./styles.scss";
+
 
 const classNamePrefix = "weather-detail-item";
 

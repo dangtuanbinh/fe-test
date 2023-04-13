@@ -1,7 +1,8 @@
 import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined";
+import DeleteOutlined from "@ant-design/icons/lib/icons/DeleteOutlined";
+
 import { IHistoryData } from "../../utils/types/commonTypes";
 import "./styles.scss";
-import DeleteOutlined from "@ant-design/icons/lib/icons/DeleteOutlined";
 
 const classNamePrefix = "history-list-item";
 
@@ -18,7 +19,7 @@ const HistoryListItem: React.FC<IHistoryListItemProps> = (props) => {
   return (
     <div className={`${classNamePrefix}`}>
       <div className={`${classNamePrefix}__title-group`}>
-        <div>{index && index}. </div>
+        <div>{index}. </div>
         <div className={`${classNamePrefix}__title`}>
           {data?.city}, {data?.country}
         </div>

@@ -78,6 +78,7 @@ const HomePage = () => {
       if (data.status === "fulfilled") {
         setWeather(data.data);
         setNoData(false);
+        handleClearSearchInput()
         handleAddToHistoryList();
       } else if (error) {
         setNoData(true);
