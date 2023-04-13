@@ -56,8 +56,7 @@ const WeatherDetailItem: React.FC<IWeatherDetailItem> = (props) => {
             {data?.weather[0]?.description}
           </div>
           <div className={`${classNamePrefix}__detail-content`}>
-            {formatFahrenheitToCelcius(data?.main?.temp_min)} -
-            {formatFahrenheitToCelcius(data?.main?.temp_max)}
+            {formatFahrenheitToCelcius(data?.main?.temp_min)} - {formatFahrenheitToCelcius(data?.main?.temp_max)}
           </div>
           <div className={`${classNamePrefix}__detail-content`}>
             {data?.main?.humidity}%
