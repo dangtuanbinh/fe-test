@@ -1,8 +1,7 @@
 /* eslint-disable no-restricted-globals */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { API_LINK, BASE_URL } from "../../utils/constants";
-
-const API_KEY = process.env.REACT_APP_API_KEY
+import {API_KEY} from "../../../src/config"
 
 export const weatherAPIs = createApi({
   reducerPath: "weatherAPIs",
@@ -13,11 +12,16 @@ export const weatherAPIs = createApi({
   endpoints: (builder) => ({
     getWeather: builder.query({
       query: (data) => ({
-        url: `${BASE_URL}?q=${data.city},${data.country}&appid=5ee22198ff074c6271737bfbf846d9a7`,
+        url: `${BASE_URL}?q=${data.city},${data.country}&appid=${API_KEY}`,
         method: "GET",
       }),
     }),
-  }),
+    getInitialWeather: builder.query({
+      query: () => ({
+        url: `${BASE_URL}?q=london,uk&appid=${API_KEY}`,
+        method: "GET",
+      }),
+    }),  }),
 });
 
-export const { useLazyGetWeatherQuery } = weatherAPIs;
+export const { useLazyGetWeatherQuery, useGetInitialWeatherQuery } = weatherAPIs;

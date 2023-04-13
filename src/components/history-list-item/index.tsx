@@ -8,11 +8,12 @@ const classNamePrefix = "history-list-item";
 interface IHistoryListItemProps {
   data?: IHistoryData;
   index?: number;
-  handleDeleteHistory?: () => void
+  handleDeleteHistory?: () => void;
+  onHistoryItemSearch?: () => void;
 }
 
 const HistoryListItem: React.FC<IHistoryListItemProps> = (props) => {
-  const { data,index, handleDeleteHistory } = props;
+  const { data, index, handleDeleteHistory, onHistoryItemSearch } = props;
 
   return (
     <div className={`${classNamePrefix}`}>
@@ -24,15 +25,20 @@ const HistoryListItem: React.FC<IHistoryListItemProps> = (props) => {
       </div>
 
       <div className={`${classNamePrefix}__action-group`}>
-        <div className={`${classNamePrefix}__timestamp`}>{data?.created_at}</div>
+        <div className={`${classNamePrefix}__timestamp`}>
+          {data?.created_at}
+        </div>
 
-        <div className={`${classNamePrefix}__action-button search-button`}>
+        <div className={`${classNamePrefix}__action-button search-button`} onClick={onHistoryItemSearch}>
           <SearchOutlined
             className={`${classNamePrefix}__action-button-icon`}
           />
         </div>
 
-        <div className={`${classNamePrefix}__action-button`} onClick={handleDeleteHistory}>
+        <div
+          className={`${classNamePrefix}__action-button`}
+          onClick={handleDeleteHistory}
+        >
           <DeleteOutlined
             className={`${classNamePrefix}__action-button-icon`}
           />

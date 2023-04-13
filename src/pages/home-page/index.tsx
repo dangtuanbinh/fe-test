@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import * as lodash from "lodash";
 
@@ -10,8 +10,12 @@ import StyledTitle from "../../components/styled-tilte";
 import { IHistoryData } from "../../utils/types/commonTypes";
 import HistoryListItem from "../../components/history-list-item";
 import WeatherDetailItem from "../../components/weather-detail-item";
-import { useLazyGetWeatherQuery } from "../../store/weather/weatherApis";
+import {
+  useGetInitialWeatherQuery,
+  useLazyGetWeatherQuery,
+} from "../../store/weather/weatherApis";
 import { deleteHistory, setHistory } from "../../store/history/historySlices";
+import { getTimeStamps } from "../../utils/commonFunctions";
 
 const classNamePrefix = "home-page";
 
@@ -20,16 +24,16 @@ const HomePage = () => {
 
   const historyList = useSelector(getHistory);
 
-  const [trigger] = useLazyGetWeatherQuery();
+  const [trigger, error] = useLazyGetWeatherQuery();
+  const { data: initialWeather, isSuccess: isGetInitialWeatherSuccess } =
+    useGetInitialWeatherQuery({});
 
   const [city, setCity] = useState<string>("");
   const [country, setCountry] = useState<string>("");
+  const [weather, setWeather] = useState();
 
-  const [weather, setWeather] = useState({});
-  const [queryStatus, setQueryStatus] = useState<string>("");
   const [showErrors, setShowErrors] = useState<boolean>(false);
-
-  console.log(weather);
+  const [noData, setNoData] = useState<boolean>(false);
 
   const onCityInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -46,6 +50,22 @@ const HomePage = () => {
     setCountry("");
   }, []);
 
+  const handleAddToHistoryList = () => {
+    const isNotInHistory = historyList.every(
+      (h: IHistoryData) => h.city !== city
+    );
+    if (isNotInHistory) {
+      dispatch(
+        setHistory({
+          id: uuidv4(),
+          city: city,
+          country: country,
+          created_at: getTimeStamps(),
+        })
+      );
+    }
+  };
+
   const handleSearch = async () => {
     if (!city || !country) {
       setShowErrors(true);
@@ -57,16 +77,26 @@ const HomePage = () => {
 
       if (data.status === "fulfilled") {
         setWeather(data.data);
-        setQueryStatus(data.status);
-        dispatch(
-          setHistory({
-            id: uuidv4(),
-            city: city,
-            country: country,
-            created_at: "12:12",
-          })
-        );
+        setNoData(false);
+        handleAddToHistoryList();
+      } else if (error) {
+        setNoData(true);
       }
+    }
+  };
+
+  const handleHistoryItemClick = async (id: string | number) => {
+    const selectedHistoryItem = historyList.find(
+      (item: IHistoryData) => item.id === id
+    );
+
+    const data = await trigger({
+      city: selectedHistoryItem.city,
+      country: selectedHistoryItem.country,
+    });
+
+    if (data.status === "fulfilled") {
+      setWeather(data.data);
     }
   };
 
@@ -80,6 +110,10 @@ const HomePage = () => {
 
     dispatch(deleteHistory(indexSelectedItem));
   };
+
+  useEffect(() => {
+    if (isGetInitialWeatherSuccess) setWeather(initialWeather);
+  }, [initialWeather]);
 
   return (
     <div className={`${classNamePrefix}`}>
@@ -140,13 +174,15 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className={`${classNamePrefix}__weather-item`}>
-        {queryStatus === "fulfilled" ? (
+      {weather && noData === false ? (
+        <div className={`${classNamePrefix}__weather-item`}>
           <WeatherDetailItem data={weather} />
-        ) : (
-          <div>Not found</div>
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className={`${classNamePrefix}__record-empty`}>
+          <span> Not found</span>
+        </div>
+      )}
 
       <StyledTitle title="Search History" />
 
@@ -159,6 +195,7 @@ const HomePage = () => {
                   data={h}
                   index={historyList.indexOf(h) + 1}
                   handleDeleteHistory={() => handleDeleteHistory(h.id)}
+                  onHistoryItemSearch={() => handleHistoryItemClick(h.id)}
                 />
               </div>
             ))}

@@ -1,8 +1,19 @@
 .weather-detail-item {
+  width: 420px;
+
   padding-left: 40px;
   margin-top: 50px;
 
   &__weather-group {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    width: 100%;
+  }
+
+  &__location-group {
     span {
       font-size: 18px;
       font-weight: 800;
@@ -18,9 +29,17 @@
     color: #222222;
   }
 
+  &__degree {
+    span {
+      font-size: 50px;
+      font-weight: 800;
+    }
+  }
+
   &__detail {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
 
     margin-top: 20px;
@@ -42,7 +61,27 @@
     color: #8e8e8e;
   }
 
+  &__detail-icon {
+    margin-right: 10px;
+  }
+
   &__detail-content {
     color: #222222;
+  }
+}
+
+// Responsive
+@media screen and (max-width: 576px) {
+  .weather-detail-item {
+    width: 420px;
+
+    margin: 20px 0;
+    padding: 40px 20px;
+
+    border: 1px solid #dad1d1;
+
+    box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.75);
   }
 }

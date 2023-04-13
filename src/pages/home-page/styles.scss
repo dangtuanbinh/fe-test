@@ -5,6 +5,10 @@
     align-items: center;
 
     margin: 20px 0;
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #dad1d1;
+
   }
 
   &__location-search {
@@ -99,21 +103,23 @@
 
   &__weather-item {
     min-height: 200px;
-    
+
     margin-bottom: 20px;
   }
 
-  &__record{
+  &__record {
     min-height: 120px;
 
     margin-bottom: 40px;
   }
 
-  &__record-empty{
+  &__record-empty {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+
+    min-height: 200px;
 
     margin-top: 40px;
 
@@ -122,3 +128,115 @@
     color: #dc1414c8;
   }
 }
+
+/* Responsive */
+@media screen and (max-width: 1200px) {
+}
+
+@media screen and (max-width: 1060px) {
+  .home-page {
+    &__location-search-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__location-search-input{
+      flex: 1;
+    }
+
+    &__location-search{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      width: 100%;
+
+      margin-bottom: 25px;
+
+      span{
+        width: 80px;
+      }
+
+      input{
+        width: 96%;
+      }
+    }
+
+    &__button-group {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+
+      margin-top: 10px;
+    }
+
+    &__button {
+      margin-right: 8px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .home-page {
+    &__location-search-group {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__location-search-input{
+      flex: 1;
+    }
+
+    &__location-search{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      width: 100%;
+
+      margin-bottom: 25px;
+
+      span{
+        width: 80px;
+      }
+
+      input{
+        width: 94%;
+      }
+    }
+
+    &__button-group {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      width: 100%;
+
+      margin-top: 10px;
+    }
+
+    &__button {
+      margin-right: 8px;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .home-page{
+    &__weather-item{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+/* End of responsive */
